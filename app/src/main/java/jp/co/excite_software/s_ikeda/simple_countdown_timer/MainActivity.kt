@@ -124,6 +124,8 @@ class MainActivity : AppCompatActivity() {
         uiUpdate {
             binding.buttonStartStop.text = getString(R.string.button_label_ok)
         }
+
+        status = TimerStatus.Alarm
     }
 
     private fun stop() {
