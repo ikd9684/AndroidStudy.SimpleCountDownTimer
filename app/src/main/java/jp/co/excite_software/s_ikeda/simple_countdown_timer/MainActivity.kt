@@ -9,18 +9,30 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import jp.co.excite_software.s_ikeda.simple_countdown_timer.databinding.ActivityMainBinding
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    enum class TimerStatus {
-        Start,
-        Stop,
-        Alarm,
+
+    private val alarmListener = object : CountDownTimer.AlarmListener {
+        override fun alarm() {
+            updateUI {
+                binding.buttonStartStop.text = getString(R.string.button_label_ok)
+            }
+            streamId = soundPool.play(soundAlarm, 1.0f, 1.0f, 0, 0, 1.0f)
+        }
     }
 
-    companion object {
-        private const val SECOND: Long = 1000
+    private val timeValueListener = object : CountDownTimer.TimeValueListener {
+        override fun updateTimeValue(minutes: Int, seconds: Int, milliSeconds: Int) {
+            updateUI {
+                binding.textViewSeconds.text =
+                    getString(R.string.time_value_format, minutes, seconds)
+                binding.textViewMilliSec.text =
+                    getString(R.string.msec_value_format, milliSeconds / 100)
+            }
+        }
     }
+
+    private var countDownTimer = CountDownTimer(timeValueListener, alarmListener)
 
     private lateinit var binding: ActivityMainBinding
 
@@ -30,12 +42,6 @@ class MainActivity : AppCompatActivity() {
     private var streamId: Int? = null
 
     private val uiHandler = Handler(Looper.getMainLooper())
-
-    private var timer: Timer? = null
-    private var status: TimerStatus = TimerStatus.Stop
-    private var aSetSeconds: Int = 0
-    private var alarmTime: Long = 0
-    private var remaining: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +54,15 @@ class MainActivity : AppCompatActivity() {
             // play(ロードしたID, 左音量, 右音量, 優先度, ループ, 再生速度)
             soundPool.play(soundSingle, 1.0f, 1.0f, 0, 0, 1.0f)
 
-            when (status) {
-                TimerStatus.Stop -> {
+            when (countDownTimer.status) {
+                CountDownTimer.TimerStatus.Stop -> {
                     start()
                 }
-                TimerStatus.Start -> {
+                CountDownTimer.TimerStatus.Start -> {
                     stop()
                 }
-                TimerStatus.Alarm -> {
-                    ok()
+                CountDownTimer.TimerStatus.Alarm -> {
+                    reset()
                 }
             }
         }
@@ -68,90 +74,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        initAlarmTime(6)
+        countDownTimer.initAlarmTime(6)
     }
 
     private fun updateUI(update: () -> Unit) {
         uiHandler.post(update)
     }
 
-    private fun setTimeValue(time: Long) {
-        val minutes: Long = time / SECOND / 60
-        val seconds: Long = time / SECOND % 60
-        val milliSec: Long = (time - (minutes * SECOND * 60) - (seconds * SECOND)) / 100
-        updateUI {
-            binding.textViewSeconds.text = getString(R.string.time_value_format, minutes, seconds)
-            binding.textViewMilliSec.text = getString(R.string.msec_value_format, milliSec)
-        }
-    }
-
     private fun start() {
         updateUI {
             binding.buttonStartStop.text = getString(R.string.button_label_stop)
         }
-
-        timer?.cancel()
-        timer = Timer()
-        alarmTime = if (alarmTime == 0L) {
-            Date().time + (aSetSeconds * SECOND)
-        } else {
-            Date().time + remaining
-        }
-        timer?.schedule(object : TimerTask() {
-            override fun run() {
-                remaining = alarmTime - Date().time
-                if (remaining <= SECOND) {
-                    timer?.cancel()
-                    setTimeValue(0)
-                    alarm()
-                } else {
-                    setTimeValue(remaining)
-                }
-            }
-        }, 0, 100)
-
-        status = TimerStatus.Start
+        countDownTimer.start()
     }
 
-    private fun alarm() {
-        streamId = soundPool.play(soundAlarm, 1.0f, 1.0f, 0, 0, 1.0f)
-
-        updateUI {
-            binding.buttonStartStop.text = getString(R.string.button_label_ok)
-        }
-
-        alarmTime = 0L
-
-        status = TimerStatus.Alarm
-    }
-
-    private fun ok() {
+    private fun reset() {
         updateUI {
             binding.buttonStartStop.text = getString(R.string.button_label_start)
         }
         streamId?.let { soundPool.stop(it) }
         streamId = null
 
-        initAlarmTime()
-
-        status = TimerStatus.Stop
+        countDownTimer.reset()
     }
 
     private fun stop() {
         updateUI {
             binding.buttonStartStop.text = getString(R.string.button_label_start)
         }
-
-        timer?.cancel()
-
-        status = TimerStatus.Stop
-    }
-
-    private fun initAlarmTime(aSetSeconds: Int? = null) {
-        aSetSeconds?.let {
-            this.aSetSeconds = it
-        }
-        setTimeValue(this.aSetSeconds * SECOND)
+        countDownTimer.stop()
     }
 
     private fun initSound(completion: () -> Unit) {
