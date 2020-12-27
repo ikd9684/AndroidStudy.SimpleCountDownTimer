@@ -13,20 +13,28 @@
         tools:context=".MainActivity">
 
         <TextView
-            android:id="@+id/textViewTime"
-            android:layout_width="0dp"
+            android:id="@+id/textViewSeconds"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
             android:autoSizeTextType="uniform"
             android:textAlignment="center"
             android:textColor="@color/text_color_normal"
-            android:textSize="100sp"
+            android:textSize="80sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonStartStop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="00:00" />
+
+        <TextView
+            android:id="@+id/textViewMilliSec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewSeconds"
+            app:layout_constraintStart_toEndOf="@+id/textViewSeconds"
+            tools:text=".000" />
 
         <Button
             android:id="@+id/buttonStartStop"

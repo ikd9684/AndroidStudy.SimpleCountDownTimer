@@ -33,18 +33,15 @@ class MainActivity : AppCompatActivity() {
 
     private var timer: Timer? = null
     private var status: TimerStatus = TimerStatus.Stop
-    private var aSetTime: Long = 0
+    private var aSetSeconds: Int = 0
+    private var alarmTime: Long = 0
+    private var remaining: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-
-        binding.textViewTime.text = getString(R.string.zero_time_value)
-
-        aSetTime = 6 * SECOND
-        setTimeValue(aSetTime)
 
         binding.buttonStartStop.text = getString(R.string.button_label_start)
         binding.buttonStartStop.setOnClickListener {
@@ -66,51 +63,49 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonStartStop.visibility = View.INVISIBLE
         initSound {
-            uiUpdate {
+            updateUI {
                 binding.buttonStartStop.visibility = View.VISIBLE
             }
         }
+
+        initAlarmTime(6)
     }
 
-    private fun uiUpdate(update: () -> Unit) {
+    private fun updateUI(update: () -> Unit) {
         uiHandler.post(update)
     }
 
     private fun setTimeValue(time: Long) {
         val minutes: Long = time / SECOND / 60
         val seconds: Long = time / SECOND % 60
-        uiUpdate {
-            binding.textViewTime.text = getString(R.string.time_value_format, minutes, seconds)
+        val milliSec: Long = (time - (minutes * SECOND * 60) - (seconds * SECOND)) / 100
+        updateUI {
+            binding.textViewSeconds.text = getString(R.string.time_value_format, minutes, seconds)
+            binding.textViewMilliSec.text = getString(R.string.msec_value_format, milliSec)
         }
-    }
-
-    private fun ok() {
-        uiUpdate {
-            binding.buttonStartStop.text = getString(R.string.button_label_start)
-        }
-        streamId?.let { soundPool.stop(it) }
-        streamId = null
-
-        status = TimerStatus.Stop
     }
 
     private fun start() {
-        uiUpdate {
+        updateUI {
             binding.buttonStartStop.text = getString(R.string.button_label_stop)
         }
 
         timer?.cancel()
         timer = Timer()
-        val startTime = Date().time + aSetTime + SECOND
+        alarmTime = if (alarmTime == 0L) {
+            Date().time + (aSetSeconds * SECOND)
+        } else {
+            Date().time + remaining
+        }
         timer?.schedule(object : TimerTask() {
             override fun run() {
-                aSetTime = startTime - Date().time
-                if (aSetTime <= SECOND) {
+                remaining = alarmTime - Date().time
+                if (remaining <= SECOND) {
                     timer?.cancel()
                     setTimeValue(0)
                     alarm()
                 } else {
-                    setTimeValue(aSetTime)
+                    setTimeValue(remaining)
                 }
             }
         }, 0, 100)
@@ -121,21 +116,42 @@ class MainActivity : AppCompatActivity() {
     private fun alarm() {
         streamId = soundPool.play(soundAlarm, 1.0f, 1.0f, 0, 0, 1.0f)
 
-        uiUpdate {
+        updateUI {
             binding.buttonStartStop.text = getString(R.string.button_label_ok)
         }
+
+        alarmTime = 0L
 
         status = TimerStatus.Alarm
     }
 
+    private fun ok() {
+        updateUI {
+            binding.buttonStartStop.text = getString(R.string.button_label_start)
+        }
+        streamId?.let { soundPool.stop(it) }
+        streamId = null
+
+        initAlarmTime()
+
+        status = TimerStatus.Stop
+    }
+
     private fun stop() {
-        uiUpdate {
+        updateUI {
             binding.buttonStartStop.text = getString(R.string.button_label_start)
         }
 
         timer?.cancel()
 
         status = TimerStatus.Stop
+    }
+
+    private fun initAlarmTime(aSetSeconds: Int? = null) {
+        aSetSeconds?.let {
+            this.aSetSeconds = it
+        }
+        setTimeValue(this.aSetSeconds * SECOND)
     }
 
     private fun initSound(completion: () -> Unit) {
