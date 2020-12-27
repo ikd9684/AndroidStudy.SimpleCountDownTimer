@@ -3,8 +3,8 @@ package jp.co.excite_software.s_ikeda.simple_countdown_timer
 import java.util.*
 
 class CountDownTimer(
-    private val timeValueListener: TimeValueListener,
-    private val alarmListener: AlarmListener
+        private val timeValueListener: TimeValueListener,
+        private val alarmListener: AlarmListener
 ) {
 
     interface TimeValueListener {
@@ -29,6 +29,10 @@ class CountDownTimer(
 
     private var timer: Timer? = null
     private var aSetSeconds: Int = 0
+        set(value) {
+            field = value
+            alarmTime = 0L
+        }
     private var alarmTime: Long = 0
     private var remaining: Long = 0
 
