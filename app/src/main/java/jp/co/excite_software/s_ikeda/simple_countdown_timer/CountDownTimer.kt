@@ -32,6 +32,19 @@ class CountDownTimer(
     private var alarmTime: Long = 0
     private var remaining: Long = 0
 
+    val minutes: Int
+        get() = if (alarmTime == 0L) {
+            aSetSeconds / 60
+        } else {
+            (remaining / SECOND / 60).toInt()
+        }
+    val seconds: Int
+        get() = if (alarmTime == 0L) {
+            aSetSeconds % 60
+        } else {
+            (remaining / SECOND % 60).toInt()
+        }
+
     fun start() {
         timer?.cancel()
         timer = Timer()

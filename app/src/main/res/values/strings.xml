@@ -7,4 +7,7 @@
     <string name="button_label_start">Start</string>
     <string name="button_label_stop">Stop</string>
     <string name="button_label_ok">OK</string>
+    <string name="colon">:</string>
+    <string name="button_label_apply">Apply</string>
+    <string name="button_label_cancel">Cancel</string>
 </resources>

@@ -13,12 +13,13 @@
         tools:context=".MainActivity">
 
         <TextView
-            android:id="@+id/textViewSeconds"
+            android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
             android:textAlignment="center"
             android:textColor="@color/text_color_normal"
+            android:background="?attr/selectableItemBackground"
             android:textSize="80sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonStartStop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewSeconds"
-            app:layout_constraintStart_toEndOf="@+id/textViewSeconds"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewTime"
+            app:layout_constraintStart_toEndOf="@+id/textViewTime"
             tools:text=".000" />
 
         <ImageButton
