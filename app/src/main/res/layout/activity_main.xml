@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity" >
+        tools:context=".MainActivity">
 
         <TextView
             android:id="@+id/textViewTime"
@@ -34,6 +34,7 @@
             android:layout_height="80dp"
             android:layout_marginBottom="60dp"
             android:background="@drawable/standard_button_rounded"
+            android:soundEffectsEnabled="false"
             android:text="Start"
             android:textAllCaps="false"
             android:textColor="@color/text_color_primary"
