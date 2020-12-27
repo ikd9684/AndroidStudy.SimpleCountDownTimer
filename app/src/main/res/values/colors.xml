@@ -10,6 +10,7 @@
 
     <color name="primary_variant">#FF224488</color>
     <color name="primary">#FF4488FF</color>
+    <color name="disable">#FF888888</color>
     <color name="text_color_normal">#FF444444</color>
     <color name="text_color_primary">#FFDDDDDD</color>
     <color name="window_background">#FFFFFFFF</color>
