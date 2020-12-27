@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private val alarmListener = object : CountDownTimer.AlarmListener {
         override fun alarm() {
             updateUI {
-                binding.buttonStartStop.text = getString(R.string.button_label_ok)
+                binding.buttonStartStop.setImageResource(R.drawable.ic_baseline_replay_24)
             }
             streamId = soundPool.play(soundAlarm, 1.0f, 1.0f, 0, 0, 1.0f)
         }
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
-        binding.buttonStartStop.text = getString(R.string.button_label_start)
+        binding.buttonStartStop.setImageResource(R.drawable.ic_baseline_play_arrow_24)
         binding.buttonStartStop.setOnClickListener {
             // play(ロードしたID, 左音量, 右音量, 優先度, ループ, 再生速度)
             soundPool.play(soundSingle, 1.0f, 1.0f, 0, 0, 1.0f)
@@ -83,14 +83,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun start() {
         updateUI {
-            binding.buttonStartStop.text = getString(R.string.button_label_stop)
+            binding.buttonStartStop.setImageResource(R.drawable.ic_baseline_pause_24)
         }
         countDownTimer.start()
     }
 
     private fun reset() {
         updateUI {
-            binding.buttonStartStop.text = getString(R.string.button_label_start)
+            binding.buttonStartStop.setImageResource(R.drawable.ic_baseline_play_arrow_24)
         }
         streamId?.let { soundPool.stop(it) }
         streamId = null
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun stop() {
         updateUI {
-            binding.buttonStartStop.text = getString(R.string.button_label_start)
+            binding.buttonStartStop.setImageResource(R.drawable.ic_baseline_play_arrow_24)
         }
         countDownTimer.stop()
     }

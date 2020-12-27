@@ -36,17 +36,19 @@
             app:layout_constraintStart_toEndOf="@+id/textViewSeconds"
             tools:text=".000" />
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonStartStop"
             android:layout_width="120dp"
             android:layout_height="80dp"
             android:layout_marginBottom="60dp"
             android:background="@drawable/standard_button_rounded"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:scaleType="fitCenter"
             android:soundEffectsEnabled="false"
-            android:text="Start"
-            android:textAllCaps="false"
-            android:textColor="@color/text_color_primary"
-            android:textSize="30sp"
+            android:src="@drawable/ic_baseline_replay_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
