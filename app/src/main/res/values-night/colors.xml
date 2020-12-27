@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary_variant">#FF112244</color>
+    <color name="primary">#FF4488FF</color>
+    <color name="text_color_normal">#FFFFFFFF</color>
+    <color name="text_color_primary">#FF000000</color>
+    <color name="window_background">#FF222222</color>
+    <color name="navigation_bar_color">#FF000044</color>
+</resources>

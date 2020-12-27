@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Simple Count Down Timer</string>
+
+    <string name="zero_time_value">00:00</string>
+    <string name="time_value_format">%02d:%02d</string>
+    <string name="button_label_start">Start</string>
+    <string name="button_label_stop">Stop</string>
+    <string name="button_label_ok">Ok</string>
+</resources>
