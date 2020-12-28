@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -164,8 +164,8 @@ class MainActivity : AppCompatActivity() {
     ) :
             CustomDialogFragment(R.layout.layout_a_set_time_dialog) {
 
-        private lateinit var buttonCancel: Button
-        private lateinit var buttonApply: Button
+        private lateinit var buttonCancel: ImageButton
+        private lateinit var buttonApply: ImageButton
         private lateinit var pickerMinutes: NumberPicker
         private lateinit var pickerSeconds: NumberPicker
 
