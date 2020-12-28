@@ -27,10 +27,8 @@ class MainActivity : AppCompatActivity() {
     private val timeValueListener = object : CountDownTimer.TimeValueListener {
         override fun updateTimeValue(minutes: Int, seconds: Int, milliSeconds: Int) {
             updateUI {
-                binding.textViewTime.text =
-                    getString(R.string.time_value_format, minutes, seconds)
-                binding.textViewMilliSec.text =
-                    getString(R.string.msec_value_format, milliSeconds / 100)
+                binding.textViewTime.text = getString(R.string.time_value_format, minutes, seconds)
+                binding.textViewMilliSec.text = getString(R.string.msec_value_format, milliSeconds / 100)
             }
         }
     }
@@ -55,16 +53,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.textViewTime.setOnClickListener {
             val dialogFragment = ASetTimerDialog(
-                countDownTimer.minutes,
-                countDownTimer.seconds,
-                { minutes, seconds ->
-                    playSound(soundSingle)
-                    countDownTimer.initAlarmTime(minutes * 60 + seconds)
-                }, { _, _, _ ->
-                    playSound(soundClick)
-                }, { _, _, _ ->
-                    playSound(soundClick)
-                })
+                    countDownTimer.minutes,
+                    countDownTimer.seconds,
+                    { minutes, seconds ->
+                        playSound(soundSingle)
+                        countDownTimer.initAlarmTime(minutes * 60 + seconds)
+                    }, { _, _, _ ->
+                playSound(soundClick)
+            }, { _, _, _ ->
+                playSound(soundClick)
+            })
             dialogFragment.show(supportFragmentManager, "fragment_dialog")
         }
 
@@ -126,14 +124,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSound(completion: () -> Unit) {
         val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-            .build()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .build()
 
         soundPool = SoundPool.Builder()
-            .setAudioAttributes(audioAttributes)
-            .setMaxStreams(1)
-            .build()
+                .setAudioAttributes(audioAttributes)
+                .setMaxStreams(1)
+                .build()
 
         /* 効果音のダウンロード元
          * https://taira-komori.jpn.org/quick/quick.cgi?mode=find&word=%83A%83%89%81%5B%83%80
@@ -149,22 +147,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun playSound(
-        soundId: Int,
-        volume: Float = 1.0f,
-        loop: Int = 0,
-        rate: Float = 1.0f
+            soundId: Int,
+            volume: Float = 1.0f,
+            loop: Int = 0,
+            rate: Float = 1.0f
     ): Int {
         return soundPool.play(soundId, volume, volume, 0, loop, rate)
     }
 
     class ASetTimerDialog(
-        private val minutes: Int,
-        private val seconds: Int,
-        private val applyEvent: (minutes: Int, seconds: Int) -> Unit,
-        private val onChangeMinutes: ((picker: NumberPicker, oldVal: Int, newVal: Int) -> Unit)? = null,
-        private val onChangeSeconds: ((picker: NumberPicker, oldVal: Int, newVal: Int) -> Unit)? = null
+            private val minutes: Int,
+            private val seconds: Int,
+            private val applyEvent: (minutes: Int, seconds: Int) -> Unit,
+            private val onChangeMinutes: ((picker: NumberPicker, oldVal: Int, newVal: Int) -> Unit)? = null,
+            private val onChangeSeconds: ((picker: NumberPicker, oldVal: Int, newVal: Int) -> Unit)? = null
     ) :
-        CustomDialogFragment(R.layout.layout_a_set_time_dialog) {
+            CustomDialogFragment(R.layout.layout_a_set_time_dialog) {
 
         private lateinit var buttonCancel: Button
         private lateinit var buttonApply: Button

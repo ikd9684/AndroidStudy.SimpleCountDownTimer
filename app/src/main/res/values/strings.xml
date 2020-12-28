@@ -10,4 +10,5 @@
     <string name="colon">:</string>
     <string name="button_label_apply">Apply</string>
     <string name="button_label_cancel">Cancel</string>
+    <string name="set_the_minutes_and_seconds">分と秒を設定してください</string>
 </resources>
