@@ -17,10 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
+            android:background="?attr/selectableItemBackground"
             android:textAlignment="center"
             android:textColor="@color/text_color_normal"
-            android:background="?attr/selectableItemBackground"
-            android:textSize="80sp"
+            android:textSize="100sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonStartStop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,11 +31,11 @@
             android:id="@+id/textViewMilliSec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:textSize="40sp"
+            android:layout_marginBottom="14dp"
+            android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewTime"
             app:layout_constraintStart_toEndOf="@+id/textViewTime"
-            tools:text=".000" />
+            tools:text=".0" />
 
         <ImageButton
             android:id="@+id/buttonStartStop"
