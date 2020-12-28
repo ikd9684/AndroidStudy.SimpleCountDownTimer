@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        countDownTimer.initAlarmTime(6)
+        countDownTimer.initAlarmTime(3 * 60)
     }
 
     private fun updateUI(update: () -> Unit) {
