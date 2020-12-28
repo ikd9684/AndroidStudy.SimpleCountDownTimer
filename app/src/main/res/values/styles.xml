@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/text_color_normal</item>
+        <item name="android:textSize">80sp</item>
+        <item name="colorControlNormal">@android:color/transparent</item>
+    </style>
+</resources>
