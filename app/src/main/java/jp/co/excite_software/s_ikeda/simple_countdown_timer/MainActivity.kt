@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     { minutes, seconds ->
                         playSound(soundSingle)
                         countDownTimer.initAlarmTime(minutes * 60 + seconds)
+                        Preferences(this).setTime(minutes, seconds)
                     }, { _, _, _ ->
                 playSound(soundClick)
             }, { _, _, _ ->
@@ -91,7 +92,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        countDownTimer.initAlarmTime(3 * 60)
+        val storedTime = Preferences(this).getTime()
+        countDownTimer.initAlarmTime(storedTime)
     }
 
     private fun updateUI(update: () -> Unit) {
