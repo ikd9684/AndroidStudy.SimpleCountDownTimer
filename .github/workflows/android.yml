@@ -42,3 +42,15 @@ jobs:
         name: SimpleCountDownTimer
         path: app/build/outputs/bundle/release/app-release.aab
       
+    - name: Write service_account.json (needed for Google Play Publishing) from secrets to a local file
+      id: CreateServiceAccountJson
+      run: echo '${{secrets.SERVICE_ACCOUNT_JSON}}' > service_account.json
+
+    - name: Deploy SimpleCountDownTimer upload to Play Console
+      id: deploy
+      uses: r0adkll/upload-google-play@v1
+      with: 
+        serviceAccountJson: service_account.json
+        packageName: jp.co.excite_software.s_ikeda.simplecountdowntimer
+        releaseFiles: app/build/outputs/bundle/release/app-release.aab
+        track: internal
