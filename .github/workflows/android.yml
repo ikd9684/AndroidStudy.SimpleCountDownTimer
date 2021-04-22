@@ -24,7 +24,7 @@ jobs:
     - name: Build SimpleCountDownTimer app release bundle (AAB)
       id: buildRelease
       run: ./gradlew bundleRelease
-      
+
     - name: Sign SimpleCountDownTimer app bundle
       id: sign
       uses: r0adkll/sign-android-release@v1
@@ -34,14 +34,14 @@ jobs:
         alias: ${{secrets.ALIAS}}
         keyStorePassword: ${{secrets.KEY_STORE_PASSWORD}}
         keyPassword: ${{secrets.KEY_PASSWORD}}
-      
-    - name: Upload SimpleCountDownTimer app bundle
-      id: uploadArtifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: SimpleCountDownTimer
-        path: app/build/outputs/bundle/release/app-release.aab
-      
+
+#    - name: Upload SimpleCountDownTimer app bundle
+#      id: uploadArtifact
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: SimpleCountDownTimer
+#        path: app/build/outputs/bundle/release/app-release.aab
+
     - name: Write service_account.json (needed for Google Play Publishing) from secrets to a local file
       id: CreateServiceAccountJson
       run: echo '${{secrets.SERVICE_ACCOUNT_JSON}}' > service_account.json
