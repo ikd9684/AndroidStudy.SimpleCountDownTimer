@@ -46,11 +46,11 @@ jobs:
       id: CreateServiceAccountJson
       run: echo '${{secrets.SERVICE_ACCOUNT_JSON}}' > service_account.json
 
-#    - name: Deploy SimpleCountDownTimer upload to Play Console
-#      id: deploy
-#      uses: ikd9684/upload-google-play@v1
-#      with: 
-#        serviceAccountJson: service_account.json
-#        packageName: jp.co.excite_software.s_ikeda.simplecountdowntimer
-#        releaseFiles: app/build/outputs/bundle/release/app-release.aab
-#        track: internal
+    - name: Deploy SimpleCountDownTimer upload to Play Console
+      id: deploy
+      uses: ikd9684/upload-google-play@v1
+      with: 
+        serviceAccountJson: service_account.json
+        packageName: jp.co.excite_software.s_ikeda.simplecountdowntimer
+        releaseFiles: app/build/outputs/bundle/release/app-release.aab
+        track: internal
