@@ -11,7 +11,7 @@ android {
         applicationId "jp.co.excite_software.s_ikeda.simplecountdowntimer"
         minSdkVersion 27
         targetSdkVersion 30
-        versionCode 14
+        versionCode 15
         versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
