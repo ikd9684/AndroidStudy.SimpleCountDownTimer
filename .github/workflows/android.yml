@@ -48,7 +48,7 @@ jobs:
 
     - name: Deploy SimpleCountDownTimer upload to Play Console
       id: deploy
-      uses: ikd9684/upload-google-play@v1
+    uses: ikd9684/upload-google-play@v1.1.0
       with: 
         serviceAccountJson: service_account.json
         packageName: jp.co.excite_software.s_ikeda.simplecountdowntimer
